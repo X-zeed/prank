@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎉 ยินดีด้วย!</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700;900&family=Bungee+Shade&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --clr-bg: #0a0a0a;
+        --clr-accent: #ff2d55;
+        --clr-yellow: #ffd600;
+        --clr-green: #00e676;
+        --clr-blue: #2979ff;
+        --clr-text: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Noto Sans Thai", sans-serif;
+        background: var(--clr-bg);
+        color: var(--clr-text);
+        min-height: 100dvh;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+      }
+
+      /* ===== Confetti Canvas ===== */
+      #confetti {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ===== Main Content ===== */
+      .container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 480px;
+        padding: 2rem 1.25rem 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      /* ===== Clown Emoji Bounce ===== */
+      .clown {
+        font-size: 4.5rem;
+        animation: clownBounce 0.6s ease-in-out infinite alternate;
+      }
+      @keyframes clownBounce {
+        0% {
+          transform: translateY(0) rotate(-8deg);
+        }
+        100% {
+          transform: translateY(-18px) rotate(8deg);
+        }
+      }
+
+      /* ===== Headline ===== */
+      .headline {
+        font-family: "Bungee Shade", sans-serif;
+        font-size: clamp(1.4rem, 6vw, 2.2rem);
+        text-align: center;
+        color: var(--clr-yellow);
+        text-shadow:
+          3px 3px 0 var(--clr-accent),
+          6px 6px 0 rgba(255, 45, 85, 0.3);
+        animation: headShake 0.8s ease-in-out 0.3s both;
+        line-height: 1.4;
+      }
+      @keyframes headShake {
+        0% {
+          transform: scale(0.3) rotate(-10deg);
+          opacity: 0;
+        }
+        60% {
+          transform: scale(1.15) rotate(3deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1) rotate(0);
+        }
+      }
+
+      /* ===== Main Message ===== */
+      .message-box {
+        background: linear-gradient(135deg, var(--clr-accent), #b71c1c);
+        border: 4px dashed var(--clr-yellow);
+        border-radius: 20px;
+        padding: 1.5rem 1.25rem;
+        text-align: center;
+        width: 100%;
+        animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.6s both;
+        position: relative;
+        overflow: hidden;
+      }
+      .message-box::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 10px,
+          rgba(255, 255, 255, 0.04) 10px,
+          rgba(255, 255, 255, 0.04) 20px
+        );
+      }
+      .message-box h1 {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+        font-weight: 900;
+        color: var(--clr-yellow);
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+        position: relative;
+        z-index: 1;
+        line-height: 1.3;
+      }
+      @keyframes popIn {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* ===== Image Frame ===== */
+      .photo-frame {
+        position: relative;
+        width: 85%;
+        max-width: 320px;
+        aspect-ratio: 1;
+        border: 6px solid var(--clr-yellow);
+        border-radius: 24px;
+        overflow: hidden;
+        background: #1a1a1a;
+        box-shadow:
+          0 0 0 3px var(--clr-accent),
+          0 20px 60px rgba(255, 45, 85, 0.3);
+        animation: frameSlam 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1s both;
+      }
+      .photo-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .photo-frame .placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: #555;
+        font-size: 0.85rem;
+      }
+      .photo-frame .placeholder span {
+        font-size: 3rem;
+      }
+      @keyframes frameSlam {
+        0% {
+          transform: scale(0) rotate(20deg);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1) rotate(-2deg);
+          opacity: 1;
+        }
+      }
+
+      /* ===== Caption ===== */
+      .caption {
+        font-size: clamp(0.85rem, 3.5vw, 1rem);
+        text-align: center;
+        color: #aaa;
+        animation: fadeUp 0.5s ease 1.4s both;
+        line-height: 1.6;
+      }
+      .caption .arrow {
+        display: inline-block;
+        animation: pointUp 0.8s ease-in-out infinite alternate;
+        font-size: 1.5rem;
+      }
+      @keyframes pointUp {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-6px);
+        }
+      }
+      @keyframes fadeUp {
+        0% {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* ===== Footer Insult Ticker ===== */
+      .ticker-wrap {
+        width: 100%;
+        overflow: hidden;
+        border-top: 2px solid var(--clr-accent);
+        border-bottom: 2px solid var(--clr-accent);
+        padding: 0.6rem 0;
+        margin-top: 1rem;
+        animation: fadeUp 0.5s ease 1.8s both;
+      }
+      .ticker {
+        display: flex;
+        gap: 3rem;
+        animation: scroll 12s linear infinite;
+        white-space: nowrap;
+        width: max-content;
+      }
+      .ticker span {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--clr-yellow);
+      }
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ===== Floating Emojis ===== */
+      .floater {
+        position: fixed;
+        font-size: 2rem;
+        animation: floatUp 3s ease-in forwards;
+        pointer-events: none;
+        z-index: 10;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* ===== Vibrate on Tap ===== */
+      .shake-it {
+        animation: vibrateShake 0.3s ease;
+      }
+      @keyframes vibrateShake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-8px) rotate(-1deg);
+        }
+        40% {
+          transform: translateX(8px) rotate(1deg);
+        }
+        60% {
+          transform: translateX(-5px);
+        }
+        80% {
+          transform: translateX(5px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="confetti"></canvas>
+
+    <div class="container" id="main">
+      <div class="clown">🤡</div>
+
+      <div class="headline">CONGRATULATIONS!</div>
+
+      <div class="message-box" id="msgBox">
+        <h1>ไอ่ควาย<br />โดนกูหลอก</h1>
+      </div>
+
+      <div class="photo-frame" id="photoFrame">
+        <!-- ===== ใส่รูป: เปลี่ยน src เป็น path รูปของคุณ ===== -->
+        <img src="nig.png" alt="หน้าไอ่ควาย" />
+        <div class="placeholder" id="imgPlaceholder">
+          <span>🖼️</span>
+          ใส่รูปตรงนี้<br />เปลี่ยน src ใน &lt;img&gt;
+        </div>
+      </div>
+
+      <div class="caption">ไอ่คนโดนหลอก 😂</div>
+
+      <div class="ticker-wrap">
+        <div class="ticker" id="ticker">
+          <span>🐃 ควาย ควาย ควาย 🐃</span>
+          <span>😂 โดนหลอกแล้วจ้า 😂</span>
+          <span>🤡 ใครให้กดลิ้งก็กด 🤡</span>
+          <span>💀 ซื่อบื้อจริงๆ 💀</span>
+          <span>🐃 ควาย ควาย ควาย 🐃</span>
+          <span>😂 โดนหลอกแล้วจ้า 😂</span>
+          <span>🤡 ใครให้กดลิ้งก็กด 🤡</span>
+          <span>💀 ซื่อบื้อจริงๆ 💀</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ===== Confetti =====
+      const canvas = document.getElementById("confetti");
+      const ctx = canvas.getContext("2d");
+      let W, H;
+      const particles = [];
+      const colors = [
+        "#ff2d55",
+        "#ffd600",
+        "#00e676",
+        "#2979ff",
+        "#ff9100",
+        "#e040fb",
+      ];
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * W;
+          this.y = Math.random() * H - H;
+          this.w = Math.random() * 10 + 5;
+          this.h = Math.random() * 6 + 3;
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+          this.vy = Math.random() * 3 + 2;
+          this.vx = Math.random() * 2 - 1;
+          this.rot = Math.random() * 360;
+          this.rv = Math.random() * 6 - 3;
+        }
+        update() {
+          this.y += this.vy;
+          this.x += this.vx;
+          this.rot += this.rv;
+          if (this.y > H + 20) {
+            this.y = -20;
+            this.x = Math.random() * W;
+          }
+        }
+        draw() {
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate((this.rot * Math.PI) / 180);
+          ctx.fillStyle = this.color;
+          ctx.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
+          ctx.restore();
+        }
+      }
+
+      for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+      function animateConfetti() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animateConfetti);
+      }
+      animateConfetti();
+
+      // ===== Floating Emoji on Tap =====
+      const emojis = ["🐃", "🤡", "😂", "💀", "👆", "🎉", "🤣", "😹"];
+      document.body.addEventListener("click", (e) => {
+        for (let i = 0; i < 3; i++) {
+          const el = document.createElement("div");
+          el.className = "floater";
+          el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          el.style.left = e.clientX + Math.random() * 40 - 20 + "px";
+          el.style.top = e.clientY + "px";
+          el.style.animationDuration = 2 + Math.random() * 2 + "s";
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 4000);
+        }
+
+        // Shake message box
+        const box = document.getElementById("msgBox");
+        box.classList.remove("shake-it");
+        void box.offsetWidth;
+        box.classList.add("shake-it");
+
+        // Vibrate if supported
+        if (navigator.vibrate) navigator.vibrate(100);
+      });
+
+      // ===== Auto-spawn emoji every 2s =====
+      setInterval(() => {
+        const el = document.createElement("div");
+        el.className = "floater";
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = Math.random() * window.innerWidth + "px";
+        el.style.top = window.innerHeight + "px";
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 4000);
+      }, 2000);
+    </script>
+  </body>
+</html>
